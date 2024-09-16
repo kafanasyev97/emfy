@@ -7,16 +7,33 @@ function App() {
   const [data, setData] = useState([])
 
   useEffect(() => {
+    let page = 1
+    let hasMoreLeads = true
+    const headers = {
+      Authorization: `Bearer ${CODE}`,
+    }
+
     const getLeads = async () => {
-      const headers = {
-        Authorization: `Bearer ${CODE}`,
-      }
-      try {
-        const response = await axios.get(URL, { headers })
-        setData(response.data._embedded.leads)
-        console.log('1111', response.data._embedded.leads)
-      } catch (error) {
-        throw new Error(error)
+      while (hasMoreLeads) {
+        try {
+          const response = await axios.get(URL, {
+            headers,
+            params: { limit: 3, page: page },
+          })
+
+          const newLeads = response.data._embedded.leads
+          setData((prevData) => [...prevData, ...newLeads])
+
+          if (newLeads.length < 3) {
+            hasMoreLeads = false
+          }
+          page++
+
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+          console.log(data)
+        } catch (error) {
+          throw new Error(error)
+        }
       }
     }
     getLeads()
@@ -32,15 +49,16 @@ function App() {
         </tr>
       </thead>
       <tbody>
-        {data.map((el) => {
-          return (
-            <tr key={el.id}>
-              <td>{el.id}</td>
-              <td>{el.name}</td>
-              <td>{el.price}</td>
-            </tr>
-          )
-        })}
+        {data.length &&
+          data.map((el) => {
+            return (
+              <tr key={el.id}>
+                <td>{el.id}</td>
+                <td>{el.name}</td>
+                <td>{el.price}</td>
+              </tr>
+            )
+          })}
       </tbody>
     </table>
   )
