@@ -25,11 +25,16 @@ tr {
   grid-template-columns: 20% 1fr 1fr;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .lead {
   cursor: pointer;
 }
 
-.nogrid {
+.loading-width {
   grid-column: 1/-1;
 }
 

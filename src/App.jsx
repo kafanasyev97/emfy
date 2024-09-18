@@ -2,6 +2,7 @@ import axios from 'axios'
 import { URL, CODE } from './constants'
 import { useEffect, useState } from 'react'
 import './App.css'
+import ExpandedCard from './ExpandedCard'
 
 function App() {
   const [data, setData] = useState([])
@@ -65,99 +66,53 @@ function App() {
     }
   }
 
-  const formatDate = (unixTimestamp) => {
-    const date = new Date(unixTimestamp * 1000)
-    return date.toLocaleDateString('ru-RU')
-  }
-
-  const getTaskColor = (taskDateInSeconds) => {
-    const taskDate = new Date(taskDateInSeconds * 1000)
-    const today = new Date()
-
-    if (taskDate < today) {
-      return 'red'
-    } else if (
-      taskDate.getDate() === today.getDate() &&
-      taskDate.getMonth() === today.getMonth() &&
-      taskDate.getFullYear() === today.getFullYear()
-    ) {
-      return 'green'
-    } else {
-      return 'yellow'
-    }
-  }
-
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.length === 0 ? (
-          <div className="loading">Загрузка данных...</div>
-        ) : (
-          data.map((el) => {
-            return (
-              <>
-                <tr
-                  key={el.id}
-                  className="lead"
-                  onClick={() => handleCardClick(el.id)}
-                >
-                  <td>{el.id}</td>
-                  <td>{el.name}</td>
-                  <td>{el.price}</td>
-                </tr>
-
-                {selectedCard === el.id && (
-                  <tr>
-                    <td className="nogrid">
-                      {loading ? (
-                        <div>Загрузка...</div>
-                      ) : (
-                        expandedCardData && (
-                          <div>
-                            <p>
-                              <strong>ID:</strong> {expandedCardData.id}
-                            </p>
-                            <p>
-                              <strong>Название:</strong> {expandedCardData.name}
-                            </p>
-                            <p>
-                              <strong>Дата создания:</strong>{' '}
-                              {formatDate(expandedCardData.created_at)}
-                            </p>
-                            <p className="expanded-lead">
-                              <strong className="expanded-lead__key">
-                                Статус задачи:
-                              </strong>
-                              <svg width="20" height="20">
-                                <circle
-                                  cx="10"
-                                  cy="10"
-                                  r="10"
-                                  fill={getTaskColor(
-                                    expandedCardData.closest_task_at
-                                  )}
-                                />
-                              </svg>
-                            </p>
-                          </div>
-                        )
-                      )}
-                    </td>
+    <div className="container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Бюджет</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.length === 0 ? (
+            <div className="loading">Загрузка данных...</div>
+          ) : (
+            data.map((el) => {
+              return (
+                <>
+                  <tr
+                    key={el.id}
+                    className="lead"
+                    onClick={() => handleCardClick(el.id)}
+                  >
+                    <td>{el.id}</td>
+                    <td>{el.name}</td>
+                    <td>{el.price}</td>
                   </tr>
-                )}
-              </>
-            )
-          })
-        )}
-      </tbody>
-    </table>
+
+                  {selectedCard === el.id && (
+                    <tr>
+                      <td className="loading-width">
+                        {loading ? (
+                          <div>Загрузка...</div>
+                        ) : (
+                          expandedCardData && (
+                            <ExpandedCard expandedCard={expandedCardData} />
+                          )
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </>
+              )
+            })
+          )}
+        </tbody>
+      </table>
+    </div>
   )
 }
 
