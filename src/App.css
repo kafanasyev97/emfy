@@ -1,3 +1,8 @@
+body {
+  background-color: #e5e5ed;
+  color: #101010;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -6,7 +11,7 @@ table {
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 1px solid #afafb1;
 }
 
 th,
@@ -24,6 +29,10 @@ tr {
   cursor: pointer;
 }
 
+.nogrid {
+  grid-column: 1/-1;
+}
+
 .expanded-lead {
   display: flex;
 }
@@ -34,4 +43,6 @@ tr {
 
 .loading {
   text-align: center;
+  border: 1px solid #afafb1;
+  padding: 10px 0;
 }

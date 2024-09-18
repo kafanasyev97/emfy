@@ -97,11 +97,17 @@ function App() {
         </tr>
       </thead>
       <tbody>
-        {data.length === 0 ? <p className='loading'>Загрузка данных...</p> :
+        {data.length === 0 ? (
+          <div className="loading">Загрузка данных...</div>
+        ) : (
           data.map((el) => {
             return (
               <>
-                <tr key={el.id} className='lead' onClick={() => handleCardClick(el.id)}>
+                <tr
+                  key={el.id}
+                  className="lead"
+                  onClick={() => handleCardClick(el.id)}
+                >
                   <td>{el.id}</td>
                   <td>{el.name}</td>
                   <td>{el.price}</td>
@@ -109,7 +115,7 @@ function App() {
 
                 {selectedCard === el.id && (
                   <tr>
-                    <td colSpan="3">
+                    <td className="nogrid">
                       {loading ? (
                         <div>Загрузка...</div>
                       ) : (
@@ -125,8 +131,10 @@ function App() {
                               <strong>Дата создания:</strong>{' '}
                               {formatDate(expandedCardData.created_at)}
                             </p>
-                            <p className='expanded-lead'>
-                              <strong className='expanded-lead__key'>Статус задачи:</strong>
+                            <p className="expanded-lead">
+                              <strong className="expanded-lead__key">
+                                Статус задачи:
+                              </strong>
                               <svg width="20" height="20">
                                 <circle
                                   cx="10"
@@ -142,13 +150,14 @@ function App() {
                         )
                       )}
                     </td>
-                  </tr >
+                  </tr>
                 )}
               </>
             )
-          })}
+          })
+        )}
       </tbody>
-    </table >
+    </table>
   )
 }
 
