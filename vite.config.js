@@ -7,14 +7,5 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
-  // server: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'https://afanasyevkirill97.amocrm.ru',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, ''),
-  //     },
-  //   },
-  // },
   plugins: [react()],
 })
