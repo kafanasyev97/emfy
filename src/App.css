@@ -14,3 +14,24 @@ td {
   padding: 10px;
   text-align: left;
 }
+
+tr {
+  display: grid;
+  grid-template-columns: 20% 1fr 1fr;
+}
+
+.lead {
+  cursor: pointer;
+}
+
+.expanded-lead {
+  display: flex;
+}
+
+.expanded-lead__key {
+  padding-right: 10px;
+}
+
+.loading {
+  text-align: center;
+}

@@ -97,11 +97,11 @@ function App() {
         </tr>
       </thead>
       <tbody>
-        {data.length &&
+        {data.length === 0 ? <p className='loading'>Загрузка данных...</p> :
           data.map((el) => {
             return (
               <>
-                <tr key={el.id} onClick={() => handleCardClick(el.id)}>
+                <tr key={el.id} className='lead' onClick={() => handleCardClick(el.id)}>
                   <td>{el.id}</td>
                   <td>{el.name}</td>
                   <td>{el.price}</td>
@@ -119,37 +119,36 @@ function App() {
                               <strong>ID:</strong> {expandedCardData.id}
                             </p>
                             <p>
-                              <strong>Name:</strong> {expandedCardData.name}
+                              <strong>Название:</strong> {expandedCardData.name}
                             </p>
                             <p>
                               <strong>Дата создания:</strong>{' '}
                               {formatDate(expandedCardData.created_at)}
                             </p>
-                            <p>
-                              <strong>Task Status:</strong>{' '}
-                              {expandedCardData.task_status}
+                            <p className='expanded-lead'>
+                              <strong className='expanded-lead__key'>Статус задачи:</strong>
+                              <svg width="20" height="20">
+                                <circle
+                                  cx="10"
+                                  cy="10"
+                                  r="10"
+                                  fill={getTaskColor(
+                                    expandedCardData.closest_task_at
+                                  )}
+                                />
+                              </svg>
                             </p>
-                            <svg width="20" height="20">
-                              <circle
-                                cx="10"
-                                cy="10"
-                                r="10"
-                                fill={getTaskColor(
-                                  expandedCardData.closest_task_at
-                                )}
-                              />
-                            </svg>
                           </div>
                         )
                       )}
                     </td>
-                  </tr>
+                  </tr >
                 )}
               </>
             )
           })}
       </tbody>
-    </table>
+    </table >
   )
 }
 
